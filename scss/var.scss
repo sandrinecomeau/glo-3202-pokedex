@@ -1,0 +1,29 @@
+$primary: #091d60;;
+$secondary: #EA1B24;
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+$custom-colors: (
+    "yellow": #FFCA04,
+    "red": #EA1B24,
+    "blue": #3363AF,
+    "light-blue": #459cff,
+);
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+.bg-yellow {
+    background-color: map-get($theme-colors, "yellow") !important;
+}
+
+.bg-red {
+    background-color: map-get($theme-colors, "red") !important;
+}
+
+.bg-blue {
+    background-color: map-get($theme-colors, "blue") !important;
+}
+
+.bg-light-blue {
+    background-color: map-get($theme-colors, "light-blue") !important;
+}

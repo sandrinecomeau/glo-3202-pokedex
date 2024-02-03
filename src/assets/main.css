@@ -1,2 +1,11 @@
+/*------ Global Variables ------*/
 
+:root {
+    --primary: #091d60;
+    --primary-dark: #1c1c1c;
+    --red-accent: #EA1B24;
+    --yellow-accent: #FFCA04;
+    --blue-accent: #3363AF;
+    --light-text: #ffffff;
+}
 
