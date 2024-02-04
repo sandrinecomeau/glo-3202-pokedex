@@ -59,7 +59,7 @@ function showLogin() {
           <label for="exampleInputPassword1" class="form-label">Password</label>
           <input type="password" class="form-control" id="password">
         </div>
-        <button class="btn btn-primary" @click="singUp">Submit</button>
+        <button type="button" class="btn btn-primary" @click="singUp">Submit</button>
       </form>
     </div>
   </div>
