@@ -2,6 +2,12 @@ $primary: #091d60;;
 $secondary: #EA1B24;
 
 @import "../node_modules/bootstrap/scss/bootstrap";
+@import url('https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=swap');
+
+
+:root {
+    --bs-body-font-family: 'Hind', sans-serif;
+}
 
 $custom-colors: (
     "yellow": #FFCA04,
