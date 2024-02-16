@@ -1,21 +1,19 @@
 <script setup>
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { useAuthStore } from '../stores/AuthStore';
 
-function singUp(event) {
-  console.log(event)
-  const email = document.getElementById('email').value
-  const password = document.getElementById('password').value
-  const auth = getAuth();
+const authStore = useAuthStore();
 
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage); //TODO: handle error and remove console.log (side channel potential risk)
-    });
+function singUp() {
+  const email = document.getElementById('email-signup').value
+  const password = document.getElementById('password-signup').value
+  const username = document.getElementById('username-signup').value
+  authStore.registerUser({email, password});
+}
+
+function login() {
+  const email = document.getElementById('email-login').value
+  const password = document.getElementById('password-login').value
+  authStore.loginUser({ email, password });
 }
 
 function showSingUp() {
@@ -27,9 +25,6 @@ function showLogin() {
   document.getElementById('sign-up-section').classList.add('hidden')
   document.getElementById('login-section').classList.remove('hidden')
 }
-
-
-
 
 </script>
 
@@ -46,18 +41,33 @@ function showLogin() {
 
     <div class="visible" id="login-section">
       <p>Login form</p>
+      <form>
+        <div class="mb-3">
+          <label for="email-login" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="email-login">
+        </div>
+        <div class="mb-3">
+          <label for="password-login" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password-login">
+        </div>
+        <button type="button" class="btn btn-primary" @click="login">Submit</button>
+      </form>
     </div>
 
     <div class="hidden" id="sign-up-section">
       <p>Sign up form</p>
       <form>
         <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="email" >
+          <label for="username-signup" class="form-label">Username</label>
+          <input type="text" class="form-control" id="username-signup">
         </div>
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input type="password" class="form-control" id="password">
+          <label for="username-signup" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="email-signup">
+        </div>
+        <div class="mb-3">
+          <label for="password-signup" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password-signup">
         </div>
         <button type="button" class="btn btn-primary" @click="singUp">Submit</button>
       </form>
