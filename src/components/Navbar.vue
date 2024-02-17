@@ -5,17 +5,17 @@ const authStore = useAuthStore();
 
 <template>
   <p>LOGIN</p>
-<nav class="navbar fixed-top bg-primary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">
-      <img src="../assets/img/pokeball.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
-      Pokédex
-    </a>
-    <span v-if="authStore.user.uid">
-      <p>{{authStore.user.email}}</p>
-    </span>
-  </div>
-</nav>
+  <nav class="navbar fixed-top bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="../assets/img/pokeball.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+        Pokédex
+      </a>
+      <span v-if="authStore.user.uid">
+        <p>{{authStore.user.email}}</p>
+      </span>
+    </div>
+  </nav>
 </template>
 
 <style scoped>

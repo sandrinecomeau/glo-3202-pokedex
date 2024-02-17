@@ -19,13 +19,18 @@ function login() {
 function showSingUp() {
   document.getElementById('login-section').classList.add('hidden')
   document.getElementById('sign-up-section').classList.remove('hidden')
+  document.getElementById('sign-up-toggle').classList.add('selected')
+  document.getElementById('sign-up-toggle').classList.remove('not-selected')
+  document.getElementById('login-toggle').classList.add('not-selected')
 }
 
 function showLogin() {
   document.getElementById('sign-up-section').classList.add('hidden')
   document.getElementById('login-section').classList.remove('hidden')
+  document.getElementById('login-toggle').classList.add('selected')
+  document.getElementById('login-toggle').classList.remove('not-selected')
+  document.getElementById('sign-up-toggle').classList.add('not-selected')
 }
-
 </script>
 
 <template>
@@ -34,13 +39,13 @@ function showLogin() {
     <h1>Welcome to the Pokédex!</h1>
     <p>Please login or sign up to continue</p>
 
-    <div>
-      <button @click="showLogin">Login</button>
-      <button @click="showSingUp">I'm new here - Sign up!</button>
+    <div class="login-toggle">
+      <p @click="showLogin" id="login-toggle" class="selected">Login</p>
+      <p @click="showSingUp" id="sign-up-toggle" class="not-selected">I'm new here - Sign up!</p>
     </div>
 
-    <div class="visible" id="login-section">
-      <p>Login form</p>
+    <div class="form-section visible" id="login-section">
+      <h4>Login form</h4>
       <form>
         <div class="mb-3">
           <label for="email-login" class="form-label">Email address</label>
@@ -54,8 +59,8 @@ function showLogin() {
       </form>
     </div>
 
-    <div class="hidden" id="sign-up-section">
-      <p>Sign up form</p>
+    <div class="form-section hidden" id="sign-up-section">
+      <h4>Sign up form</h4>
       <form>
         <div class="mb-3">
           <label for="username-signup" class="form-label">Username</label>
@@ -76,6 +81,13 @@ function showLogin() {
 </template>
 
 <style scoped>
+button:hover{
+  background: var(--yellow-accent);
+}
+
+h1{
+  margin-top:20px;
+}
 
 .visible {
   display: block;
@@ -83,6 +95,37 @@ function showLogin() {
 
 .hidden {
   display: none;
+}
+
+.selected {
+  box-shadow: var(--blue-accent) 0 2px 0;
+}
+
+.not-selected {
+  box-shadow: #c4c4c4 0 2px 0;
+}
+
+.form-section{
+  width: 30vw;
+  min-width: 350px;
+}
+
+.login-toggle{
+  margin: 5vh 0 40px;
+  display: flex;
+  flex-direction: row;
+}
+
+.login-toggle p {
+  width: 15vw;
+  padding: 5px 0;
+  margin: 0 2px;
+  text-align: center;
+}
+
+.login-toggle p:hover {
+  box-shadow: var(--yellow-accent) 0 3px 0;
+  font-weight: bold;
 }
 
 </style>
