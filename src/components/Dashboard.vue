@@ -1,10 +1,9 @@
 <script setup>
-import { useAuthStore } from '../stores/AuthStore';
-import PokemonForm from "../components/PokemonForm.vue";
+import { useAuthStore } from '@/stores/AuthStore';
+import { db } from '@/firebase/firebase';
 import {getDocs, query, collection, where} from "firebase/firestore";
 import {onMounted, ref} from "vue";
-import { db } from '../firebase/firebase';
-
+import PokemonForm from "@/components/PokemonForm.vue";
 
 const authStore = useAuthStore();
 const pokemonList = ref([]);
