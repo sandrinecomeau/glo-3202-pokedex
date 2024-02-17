@@ -8,7 +8,6 @@ function logout() {
 </script>
 
 <template>
-  <p>LOGIN</p>
   <nav class="navbar fixed-top bg-primary">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
