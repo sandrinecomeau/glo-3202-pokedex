@@ -1,6 +1,10 @@
 <script setup>
 import { useAuthStore } from '../stores/AuthStore';
 const authStore = useAuthStore();
+
+function logout() {
+  authStore.logoutUser();
+}
 </script>
 
 <template>
@@ -11,14 +15,31 @@ const authStore = useAuthStore();
         <img src="../assets/img/pokeball.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
         Pokédex
       </a>
-      <span v-if="authStore.user.uid">
-        <p>{{authStore.user.email}}</p>
+      <span v-if="authStore.user.uid" class="navbar-text">
+        <div class="dropdown-center">
+          <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{authStore.user.email}}
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Profile</a></li>
+            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" @click="logout">Logout</a></li>
+          </ul>
+        </div>
       </span>
     </div>
   </nav>
 </template>
 
 <style scoped>
+.dropdown-toggle
+{
+  width: fit-content;
+  min-width: 160px;
+  color: white;
+}
+
 .navbar{
   color: white;
 }
@@ -28,5 +49,3 @@ const authStore = useAuthStore();
   font-family: 'Protest Strike', sans-serif;
 }
 </style>
-<script setup>
-</script>

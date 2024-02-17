@@ -1,24 +1,14 @@
 <script setup>
-import { useAuthStore } from '../stores/AuthStore';
-import Dashboard from "@/components/Dashboard.vue";
-
-const authStore = useAuthStore();
-
-function logout() {
-  authStore.logoutUser();
-}
-
+import Dashboard from "../components/Dashboard.vue";
 </script>
 
 <template>
   <div class="navbar-jump"></div>
   <div class="column dashboard-title">
-      <h2>Welcome to the Pokedex app!</h2>
+      <h2>Welcome to the Pokédex app!</h2>
   </div>
 
   <Dashboard/>
-
-  <button @click="logout">Logout</button>
 </template>
 
 <style scoped>
