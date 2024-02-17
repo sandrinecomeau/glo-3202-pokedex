@@ -1,5 +1,5 @@
 import './assets/main.css'
-
+import 'bootstrap';
 import './firebase/firebase'
 
 import { createApp } from 'vue'
@@ -13,6 +13,7 @@ const app = createApp(App)
 
 app.use(router)
 app.use(createPinia())
+
 const authStore = useAuthStore();
 authStore.init();
 

@@ -1,38 +1,30 @@
 <script setup>
 import { useAuthStore } from '../stores/AuthStore';
+import PokemonForm from "../components/PokemonForm.vue";
+import {getDocs, query, collection, where} from "firebase/firestore";
+import {onMounted, ref} from "vue";
+import { db } from '../firebase/firebase';
+
+
 const authStore = useAuthStore();
+const pokemonList = ref([]);
 
+const fetchPokemons = async () => {
+    const q = query(collection(db, "pokemon"), where("user", "==", authStore.user.uid));
+    const querySnapshot = await getDocs(q);
+    pokemonList.value = [];
+    querySnapshot.forEach((doc) => {
+        pokemonList.value.push(doc.data());
+    });
+};
 
-const pokemonList = [
-  {
-    "dex_number": "001",
-    "img":"1",
-    "specie": "Bulbasaur",
-    "type": "Plant"
-  },
-  {
-    "dex_number": "004",
-    "img":"4",
-    "specie": "Charmander",
-    "type": "Fire"
-  },
-    {
-    "dex_number": "025",
-    "img":"25",
-    "specie": "Pikachu",
-    "type": "Electric"
-  },
-  {
-    "dex_number": "151",
-    "img":"151",
-    "specie": "Mew",
-    "type": "Psy"
-  }
-]
-
+onMounted(() => {
+  fetchPokemons();
+});
 </script>
 
 <template>
+  <button @click="fetchPokemons">Refresh</button>
   <table class="table  table-striped">
      <thead>
       <tr>
@@ -40,16 +32,18 @@ const pokemonList = [
         <th scope="col">Dex</th>
         <th scope="col">Species</th>
         <th scope="col">Type</th>
-        <th scope="col">+ ADD</th>
+        <th scope="col">Nickname</th>
+        <th scope="col"><pokemon-form/></th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="(pokemon, index) in pokemonList">
         <td><img :src="`../pokemon/${pokemon.img}.png`" alt="pokemon profile icon"/></td>
-        <th scope="row">{{pokemon.dex_number}}</th>
-        <td>{{pokemon.specie}}</td>
+        <th scope="row">{{pokemon.dex}}</th>
+        <td>{{pokemon.species}}</td>
         <td>{{pokemon.type}}</td>
-        <td><button>x</button></td>
+        <td>{{pokemon.nickname}}</td>
+        <td><button type="button" class="btn-close" aria-label="Close"></button></td>
       </tr>
     </tbody>
   </table>
@@ -58,5 +52,6 @@ const pokemonList = [
 <style scoped>
 img{
   width: 40px;
+  border: grey 1px solid;
 }
 </style>
