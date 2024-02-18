@@ -22,7 +22,6 @@ const router = createRouter({
 router.beforeEach(async (to, from) => {
   const authStore = useAuthStore();
   const isAuthenticated = !!authStore.user.uid;
-  //const isAuthenticated = true;
   if (
     !isAuthenticated && to.name !== 'login-view'
   ) {

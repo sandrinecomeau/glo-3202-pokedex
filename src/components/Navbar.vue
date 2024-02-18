@@ -1,10 +1,31 @@
 <script setup>
 import { useAuthStore } from '../stores/AuthStore';
+import {onMounted, ref} from "vue";
 const authStore = useAuthStore();
 
 function logout() {
   authStore.logoutUser();
 }
+
+const currentTheme = ref('light');
+
+function toggleTheme() {
+  currentTheme.value = currentTheme.value === 'light' ? 'dark' : 'light';
+  localStorage.setItem('theme', currentTheme.value);
+  applyTheme();
+}
+
+function applyTheme() {
+  document.body.className = currentTheme.value === 'light' ? '' : 'bg-dark text-white';
+}
+
+onMounted(() => {
+  const storedTheme = localStorage.getItem('theme');
+  if (storedTheme) {
+    currentTheme.value = storedTheme;
+    applyTheme();
+  }
+});
 </script>
 
 <template>
@@ -20,8 +41,7 @@ function logout() {
             {{authStore.user.email}}
           </button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Dark Mode</a></li>
-            <li><a class="dropdown-item" href="#">Light Mode</a></li>
+            <li><a class="dropdown-item" href="#" @click.prevent="toggleTheme">Toggle Dark/Light Mode</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" @click="logout">Logout</a></li>
           </ul>
