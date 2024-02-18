@@ -10,7 +10,6 @@ const username = ref('');
 const showingLogin = ref(true);
 
 const fieldsCheckup = (form) => {
-  console.log(email.value, password.value)
   if (form === "signUp") {
     if (email.value === '' || password.value === '' || username.value === '') {
       alert('Please fill in all fields');
@@ -40,7 +39,7 @@ function signUp() {
 }
 
 function login() {
-  if (!fieldsCheckup("login")){
+  if (fieldsCheckup("login")){
     authStore.loginUser({ email: email.value, password: password.value });
   }
 }
