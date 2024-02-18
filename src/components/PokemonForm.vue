@@ -1,42 +1,45 @@
 <script setup>
 import {Modal} from "bootstrap";
 import {onMounted, ref} from "vue";
-import {db} from "@/firebase/firebase.js";
-import {addDoc, collection} from "firebase/firestore";
+import {  httpsCallable } from "firebase/functions";
 import { useAuthStore } from '@/stores/AuthStore';
+import {functions} from "@/firebase/firebase.js";
 import PokemonDropdown from "@/components/PokemonDropdown.vue";
+import Add from "@/components/Add.vue";
 
 const authStore = useAuthStore();
+
 const pokemonDropdownRef = ref('');
 const modalRef = ref(Modal);
+
+const addPokemonFunction = httpsCallable(functions, 'addPokemon');
+
+function addPokemon() {
+  const pokemonData = {
+    species: pokemonDropdownRef.value.getSelectedPokemon(),
+    nickname: document.getElementById('nickname').value
+  };
+
+  addPokemonFunction(pokemonData).then((result) => {
+    console.log(result.data.message);
+    modalRef.value.hide();
+  }).catch((error) => {
+    console.error(`Error adding Pokemon: ${error.message}`);
+  });
+}
+
 
 onMounted(() => {
       setTimeout(() => {
         modalRef.value = new Modal(document.getElementById('formModal'));
       }, 200);
 });
-
-const addPokemon = async () => {
-  const pokemon = {
-    species: pokemonDropdownRef.value.getSelectedPokemon(),
-    nickname: document.getElementById('nickname').value,
-    user: authStore.user.uid
-  };
-
-  try {
-    await addDoc(collection(db, 'pokemon'), pokemon);
-    modalRef.value.hide();
-  } catch (error) {
-    window.alert("This Pokémon could not be added. Please try again.");
-  }
-}
-
 </script>
 
 <template>
   <!-- Button trigger modal -->
   <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#formModal">
-    ADD ++
+    <add/>
   </button>
 
   <!-- Modal -->

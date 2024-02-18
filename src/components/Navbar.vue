@@ -20,8 +20,8 @@ function logout() {
             {{authStore.user.email}}
           </button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Profile</a></li>
-            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><a class="dropdown-item" href="#">Dark Mode</a></li>
+            <li><a class="dropdown-item" href="#">Light Mode</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" @click="logout">Logout</a></li>
           </ul>

@@ -53,7 +53,7 @@ onMounted(() => {
 
 <style scoped>
 .dashboard-title{
-  margin: 20px 0 5vh;
+  margin: 20px 0 50px;
 }
 
 </style>
