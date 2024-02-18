@@ -24,3 +24,7 @@ npm run dev
 ```sh
 npm run test:unit
 ```
+
+##Project Structure
+the project uses a main branch and a dev branch. 
+The main branch is the production branch and the dev branch is the development branch.
