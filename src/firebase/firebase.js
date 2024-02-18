@@ -4,13 +4,13 @@ import { getFirestore, doc, setDoc } from "firebase/firestore";
 import {getFunctions} from "firebase/functions";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD-rWbJikkK-FjYTyxgR_FMOdXHx1Vj-mg",
-  authDomain: "glo-3202-pokedex.firebaseapp.com",
-  projectId: "glo-3202-pokedex",
-  storageBucket: "glo-3202-pokedex.appspot.com",
-  messagingSenderId: "592697788405",
-  appId: "1:592697788405:web:4abd6efc098b1fe97c82bc",
-  measurementId: "G-E3BZKNNKE7"
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_ID,
+  measurementId: import.meta.env.VITE_MEASUREMENT_ID
 };
 
 const app = initializeApp(firebaseConfig);

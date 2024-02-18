@@ -9,12 +9,40 @@ const password = ref('');
 const username = ref('');
 const showingLogin = ref(true);
 
+const fieldsCheckup = (form) => {
+  console.log(email.value, password.value)
+  if (form === "signUp") {
+    if (email.value === '' || password.value === '' || username.value === '') {
+      alert('Please fill in all fields');
+      return false;
+    }
+  } else {
+    if (email.value === '' || password.value === '') {
+      alert('Please fill in all fields');
+      return false;
+    }
+  }
+  if (username.value.length > 100 || email.value.length > 100 || password.value.length > 100) {
+    alert('Maximum length for field is 100 characters');
+    return false;
+  }
+  if (password.value.length < 6) {
+    alert('Password must be at least 6 characters long');
+    return false;
+  }
+  return true;
+};
+
 function signUp() {
-  authStore.registerUser({ email: email.value, password: password.value});
+  if (fieldsCheckup("signUp")) {
+    authStore.registerUser({ email: email.value, password: password.value});
+  }
 }
 
 function login() {
-  authStore.loginUser({ email: email.value, password: password.value });
+  if (!fieldsCheckup("login")){
+    authStore.loginUser({ email: email.value, password: password.value });
+  }
 }
 
 function toggleShowLogin() {

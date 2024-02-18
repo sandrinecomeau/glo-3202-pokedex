@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
-import { useAuthStore } from '../stores/AuthStore';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,19 +19,24 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach(async (to, from) => {
-  const authStore = useAuthStore();
-  const isAuthenticated = !!authStore.user.uid;
-  if (
-    !isAuthenticated && to.name !== 'login-view'
-  ) {
-    return { name: 'login-view' }
-  }
-  if (
-    isAuthenticated && to.name === 'login-view'
-  ) {
-    return { name: 'home-view' }
-  }
-})
+function checkAuthState() {
+  return new Promise((resolve) => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      resolve(user);
+    });
+  });
+}
 
+router.beforeEach(async (to, from) => {
+  const user = await checkAuthState();
+  const isAuthenticated = !!user;
+
+  if (!isAuthenticated && to.name !== 'login-view') {
+    return { name: 'login-view' };
+  }
+  if (isAuthenticated && to.name === 'login-view') {
+    return { name: 'home-view' };
+  }
+});
 export default router
