@@ -4,6 +4,7 @@ import {onMounted, ref} from "vue";
 import {  httpsCallable } from "firebase/functions";
 import { useAuthStore } from '@/stores/AuthStore';
 import {functions} from "@/firebase/firebase.js";
+import {pokemonData} from "@/assets/pokemonData.js";
 import PokemonDropdown from "@/components/PokemonDropdown.vue";
 import Add from "@/components/Add.vue";
 
@@ -14,7 +15,38 @@ const modalRef = ref(Modal);
 
 const addPokemonFunction = httpsCallable(functions, 'addPokemon');
 
+
+function verifyForm() {
+  if (document.getElementById('nickname').value === '' || pokemonDropdownRef.value.getSelectedPokemon() === '') {
+    alert('Please fill in all fields.');
+    return false;
+  }
+  if (document.getElementById('nickname').value.length > 25 || pokemonDropdownRef.value.getSelectedPokemon().length > 25){
+    alert('Max length of nickname and species is 25 characters.');
+    return false;
+  }
+  if (!document.getElementById('nickname').value.match(/^[a-zA-Z0-9\s]*$/) || !pokemonDropdownRef.value.getSelectedPokemon().match(/^[a-zA-Z0-9\s]*$/)) {
+    alert('Nickname and species can only contain letters and numbers.');
+    return false;
+  }
+
+  let species = pokemonDropdownRef.value.getSelectedPokemon();
+  species = species.toLowerCase().replace(/\s/g, '');
+  species = species.charAt(0).toUpperCase() + species.slice(1);
+
+  if (!pokemonData.includes(species)) {
+    alert('Invalid species name');
+    return false;
+  }
+
+  return true;
+}
+
 function addPokemon() {
+  if (!verifyForm()) {
+    return;
+  }
+
   const pokemonData = {
     species: pokemonDropdownRef.value.getSelectedPokemon(),
     nickname: document.getElementById('nickname').value
@@ -69,6 +101,3 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped>
-
-</style>

@@ -1,6 +1,7 @@
 <script setup>
 import { useAuthStore } from '../stores/AuthStore';
 import {onMounted, ref} from "vue";
+import Moon from "@/components/Moon.vue";
 const authStore = useAuthStore();
 
 function logout() {
@@ -41,7 +42,12 @@ onMounted(() => {
             {{authStore.user.email}}
           </button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#" @click.prevent="toggleTheme">Toggle Dark/Light Mode</a></li>
+            <li>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" @change="toggleTheme" :checked="currentTheme === 'dark'">
+                <label class="form-check-label" for="flexSwitchCheckDefault"><Moon/></label>
+              </div>
+            </li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" @click="logout">Logout</a></li>
           </ul>
@@ -57,6 +63,10 @@ onMounted(() => {
   width: fit-content;
   min-width: 160px;
   color: white;
+}
+
+.form-check{
+  margin-left: 15px;
 }
 
 .navbar{
