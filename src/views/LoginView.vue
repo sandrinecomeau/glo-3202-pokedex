@@ -1,35 +1,28 @@
 <script setup>
+import { ref } from 'vue';
 import { useAuthStore } from '../stores/AuthStore';
 
 const authStore = useAuthStore();
 
-function singUp() {
-  const email = document.getElementById('email-signup').value
-  const password = document.getElementById('password-signup').value
-  const username = document.getElementById('username-signup').value
-  authStore.registerUser({email, password});
+const email = ref('');
+const password = ref('');
+const username = ref('');
+const showingLogin = ref(true);
+
+function signUp() {
+  authStore.registerUser({ email: email.value, password: password.value});
 }
 
 function login() {
-  const email = document.getElementById('email-login').value
-  const password = document.getElementById('password-login').value
-  authStore.loginUser({ email, password });
+  authStore.loginUser({ email: email.value, password: password.value });
 }
 
-function showSingUp() {
-  document.getElementById('login-section').classList.add('hidden')
-  document.getElementById('sign-up-section').classList.remove('hidden')
-  document.getElementById('sign-up-toggle').classList.add('selected')
-  document.getElementById('sign-up-toggle').classList.remove('not-selected')
-  document.getElementById('login-toggle').classList.add('not-selected')
+function toggleShowLogin() {
+  showingLogin.value = true;
 }
 
-function showLogin() {
-  document.getElementById('sign-up-section').classList.add('hidden')
-  document.getElementById('login-section').classList.remove('hidden')
-  document.getElementById('login-toggle').classList.add('selected')
-  document.getElementById('login-toggle').classList.remove('not-selected')
-  document.getElementById('sign-up-toggle').classList.add('not-selected')
+function toggleShowSignUp() {
+  showingLogin.value = false;
 }
 </script>
 
@@ -40,41 +33,41 @@ function showLogin() {
     <p>Please login or sign up to continue</p>
 
     <div class="login-toggle">
-      <p @click="showLogin" id="login-toggle" class="selected">Login</p>
-      <p @click="showSingUp" id="sign-up-toggle" class="not-selected">I'm new here - Sign up!</p>
+      <p @click="toggleShowLogin" :class="{ selected: showingLogin, 'not-selected': !showingLogin }">Login</p>
+      <p @click="toggleShowSignUp" :class="{ selected: !showingLogin, 'not-selected': showingLogin }">I'm new here - Sign up!</p>
     </div>
 
-    <div class="form-section visible" id="login-section">
+    <div v-if="showingLogin" class="form-section">
       <h4>Login form</h4>
       <form>
         <div class="mb-3">
-          <label for="email-login" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="email-login">
+          <label for="email" class="form-label">Email address</label>
+          <input v-model="email" type="email" class="form-control" id="email">
         </div>
         <div class="mb-3">
-          <label for="password-login" class="form-label">Password</label>
-          <input type="password" class="form-control" id="password-login">
+          <label for="password" class="form-label">Password</label>
+          <input v-model="password" type="password" class="form-control" id="password">
         </div>
         <button type="button" class="btn btn-primary" @click="login">Submit</button>
       </form>
     </div>
 
-    <div class="form-section hidden" id="sign-up-section">
+    <div v-if="!showingLogin" class="form-section">
       <h4>Sign up form</h4>
       <form>
         <div class="mb-3">
-          <label for="username-signup" class="form-label">Username</label>
-          <input type="text" class="form-control" id="username-signup">
+          <label for="username" class="form-label">Username</label>
+          <input v-model="username" type="text" class="form-control" id="username">
         </div>
         <div class="mb-3">
-          <label for="username-signup" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="email-signup">
+          <label for="email" class="form-label">Email address</label>
+          <input v-model="email" type="email" class="form-control" id="email">
         </div>
         <div class="mb-3">
-          <label for="password-signup" class="form-label">Password</label>
-          <input type="password" class="form-control" id="password-signup">
+          <label for="password" class="form-label">Password</label>
+          <input v-model="password" type="password" class="form-control" id="password">
         </div>
-        <button type="button" class="btn btn-primary" @click="singUp">Submit</button>
+        <button type="button" class="btn btn-primary" @click="signUp">Submit</button>
       </form>
     </div>
   </div>
@@ -83,18 +76,6 @@ function showLogin() {
 <style scoped>
 button:hover{
   background: var(--yellow-accent);
-}
-
-h1{
-  margin-top:20px;
-}
-
-.visible {
-  display: block;
-}
-
-.hidden {
-  display: none;
 }
 
 .selected {
