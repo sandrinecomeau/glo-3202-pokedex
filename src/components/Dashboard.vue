@@ -52,7 +52,7 @@ onMounted(() => {
         <th scope="row">{{pokemon.dex}}</th>
         <td>{{pokemon.species}}</td>
         <td>
-          <span v-for="type in pokemon.type" class="type-name">{{type}}</span>
+          <span v-for="type in pokemon.type" :key="type" :class="`type-name ${type}`">{{ type }}</span>
         </td>
         <td>{{pokemon.nickname}}</td>
         <td><button type="button" class="btn-close" aria-label="Close"  @click="deletePokemon(pokemon.id)"></button></td>
@@ -72,5 +72,11 @@ img{
 
 .type-name{
   margin-right: 5px;
+  padding: 0 12px;
+  border-radius: 15px;
+  color: white;
+  border: white 1px solid;
+  box-shadow: 0 3px 3px -1px rgba(0,0,0,0.1);
+  text-shadow: 0 1px 1px rgba(0,0,0,0.5);
 }
 </style>

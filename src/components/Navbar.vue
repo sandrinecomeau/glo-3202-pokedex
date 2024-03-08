@@ -2,6 +2,7 @@
 import { useAuthStore } from '../stores/AuthStore';
 import {onMounted, ref} from "vue";
 import Moon from "@/components/Moon.vue";
+import ProfileIcon from "@/components/ProfileIcon.vue";
 const authStore = useAuthStore();
 
 function logout() {
@@ -39,6 +40,7 @@ onMounted(() => {
       <span v-if="authStore.user.uid" class="navbar-text">
         <div class="dropdown-center">
           <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <profile-icon/>
             {{authStore.user.email}}
           </button>
           <ul class="dropdown-menu">
